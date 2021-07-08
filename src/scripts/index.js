@@ -18,6 +18,8 @@ const client = new RSocketClient({
 	}),
 });
 
+let requestCount = 0;
+let sub;
 client.connect().subscribe({
 	onComplete: socket => {
 		console.log('Completed connection');
@@ -30,10 +32,16 @@ client.connect().subscribe({
 			onComplete: () => console.log('complete'),
 			onError: error => console.error(error),
 			onNext: payload => {
+				requestCount++;
 				console.log(payload.data);
+				if (requestCount === 10) {
+					sub.request(10);
+					requestCount = 0;
+				}
 			},
 			onSubscribe: subscription => {
-				subscription.request(10000);
+				subscription.request(10);
+				sub = subscription;
 			},
 		});
 	},

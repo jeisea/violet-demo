@@ -3,13 +3,19 @@
     [
       "@babel/preset-env",
       {
-        "useBuiltIns": "usage",
+        "useBuiltIns": "entry",
         "corejs": "3.0.0"
       }
     ]
   ],
   "plugins": [
     "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-proposal-class-properties"
-  ]
+    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ]
+  ],
+  "sourceType": "unambiguous"
 }
